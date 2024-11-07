@@ -1,4 +1,4 @@
-obj-m := donn-eitean.o
+obj-m := donn_eitean.o
 SRC := $(shell pwd)
 all:
 	$(MAKE) -C $(KERNEL_SRC) M=$(SRC)
