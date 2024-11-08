@@ -1,6 +1,6 @@
 DESCRIPTION = "Development driver for mem allocations"
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://donn_eitean.c;md5=ca60b8535185bceca633d640c65e6962"
+LIC_FILES_CHKSUM = "file://donn_eitean.c;md5=6e141e82c5115ae06915ed2df5d1a886"
 
 inherit module
 
