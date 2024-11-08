@@ -2,36 +2,35 @@
 #include <linux/init.h>
 #include <linux/kernel.h>
 #include <linux/fs.h>   
-#include <linux/cdev.h> 
+#include <linux/cdev.h>
 
+#include <linux/string.h>
+#include <linux/slab.h>
 
-static dev_t donn_dev;
-struct cdev donn_cdev;
-static char buffer[64];
+#include <linux/delay.h>
 
-struct file_operations donn_fops = {
-    .owner = THIS_MODULE,
-};
+#define BUFFER_SIZE 10 * 1024 * 1024
 
-static int __init donn_module_init(void)
-{
-    printk(KERN_INFO "Loading Donn Eitean module.\n");
+static int __init donn_module_init(void){
+    printk(KERN_INFO "DE - Loading Donn Eitean module.\n");
 
-    alloc_chrdev_region(&donn_dev, 0, 1, "donn_dev");
-    printk(KERN_INFO "%s\n", format_dev_t(buffer, donn_dev));
+    while(1){
+        void* ptr = kzalloc(BUFFER_SIZE,  GFP_KERNEL);
+        if(ptr == NULL){
+            printk(KERN_INFO "DE - Failed to allocate memory for Donn Eitean module.\n");
+            return -ENOMEM;
+        }
 
-    cdev_init(&donn_cdev, &donn_fops);
-    donn_cdev.owner = THIS_MODULE;
-    cdev_add(&donn_cdev, donn_dev, 1);
+        printk(KERN_INFO "DE - Allocated 10mb with kzalloc.\n");
+
+        msleep(500);
+    }
 
     return 0;
 }
 
-static void __exit donn_module_cleanup(void)
-{
-    printk(KERN_INFO "Cleaning-up donn_cdev.\n");
-    cdev_del(&donn_cdev);
-    unregister_chrdev_region(donn_dev, 1);
+static void __exit donn_module_cleanup(void){
+    printk(KERN_INFO "Exiting Donn Eitean module.\n");
 }
 
 module_init(donn_module_init);
